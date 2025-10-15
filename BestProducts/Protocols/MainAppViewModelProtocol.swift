@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol MainAppViewModelProtocol {
+    var productRepository: ProductRepositoryProtocol { get }
+    var cancellables: Set<AnyCancellable> { get }
     var products: [Product] { get }
 
     func getProducts()

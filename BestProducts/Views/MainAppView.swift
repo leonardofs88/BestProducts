@@ -26,6 +26,9 @@ struct MainAppView: View {
             .navigationTitle("Products")
             .padding()
         }
+        .onAppear {
+            mainAppViewModel.getProducts()
+        }
     }
 }
 

@@ -9,6 +9,14 @@ import Factory
 
 extension Container {
     var mainAppViewModel: Factory<MainAppViewModelProtocol> {
-        Factory(self) { MainAppViewModel() }
+        self { MainAppViewModel() }
+    }
+
+    var service: Factory<ServiceProtocol> {
+        self { Service() }
+    }
+
+    var productRepository: Factory<ProductRepositoryProtocol> {
+        self { ProductRepository() }
     }
 }

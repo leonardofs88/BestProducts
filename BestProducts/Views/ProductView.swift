@@ -22,20 +22,14 @@ struct ProductView: View {
             Spacer()
             HStack {
                 Text(product.rating, format: .number)
-                    .fontWeight(.bold)
+//                    .fontWeight(.)
                 Image(systemName: .star)
             }
-            .shadow(
-                color: .secondary,
-                radius: 2,
-                x: 1,
-                y: 1
-            )
-            .foregroundStyle(.white)
+            .foregroundStyle(ratingColorForeground())
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
             .background(
-                ratingColor()
+                ratingColorBackground()
                     .clipShape(Capsule())
                 )
             Image(systemName: .chevronRight)
@@ -66,7 +60,18 @@ struct ProductView: View {
         .scaleEffect(tapped ? 0.98 : 1)
     }
 
-    func ratingColor() -> Color {
+    func ratingColorForeground() -> Color {
+        switch product.rating {
+        case ..<3:
+            return .lowRatingForeground
+        case 3..<4:
+                return .mediumRatingForeground
+        default:
+            return .highRatingForeground
+        }
+    }
+
+    func ratingColorBackground() -> Color {
         switch product.rating {
         case ..<3:
             return .lowRating
@@ -81,7 +86,7 @@ struct ProductView: View {
 #Preview {
     ProductView(
         product: Product(
-            id: UUID(),
+            id: 1,
             title: "First product",
             price: 10.0,
             discount: 2.0,
@@ -93,7 +98,7 @@ struct ProductView: View {
 
     ProductView(
         product: Product(
-            id: UUID(),
+            id: 2,
             title: "Second product",
             price: 10.0,
             discount: 2.0,
@@ -105,7 +110,7 @@ struct ProductView: View {
 
     ProductView(
         product: Product(
-            id: UUID(),
+            id: 3,
             title: "First product",
             price: 10.0,
             discount: 2.0,
@@ -114,31 +119,4 @@ struct ProductView: View {
             images: []
         )
     )
-}
-
-enum RatingType {
-    case low
-    case medium
-    case high
-
-    var color: Color {
-        switch self {
-        case .low:
-            return .red
-        case .medium:
-            return .yellow
-        case .high:
-            return .green
-        }
-    }
-}
-
-extension String {
-    static var star : String {
-        "star.fill"
-    }
-
-    static var chevronRight : String {
-        "chevron.right"
-    }
 }

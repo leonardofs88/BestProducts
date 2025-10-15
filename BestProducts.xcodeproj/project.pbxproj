@@ -37,9 +37,23 @@
 		9853BBA12E9FA7D500951F26 /* Exceptions for "BestProducts" folder in "BestProductsUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Error Handling/ServiceError.swift",
+				Models/Product.swift,
+				Protocols/MainAppViewModelProtocol.swift,
+				Protocols/ServiceProtocol.swift,
 				Views/ProductView.swift,
 			);
 			target = 98705B372E9FA0BC001C9A3F /* BestProductsUITests */;
+		};
+		9853BD4B2EA0213400951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Error Handling/ServiceError.swift",
+				Models/Product.swift,
+				Protocols/MainAppViewModelProtocol.swift,
+				Protocols/ServiceProtocol.swift,
+			);
+			target = 98705B2D2E9FA0BC001C9A3F /* BestProductsTests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -47,6 +61,7 @@
 		98705B1D2E9FA0BB001C9A3F /* BestProducts */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				9853BD4B2EA0213400951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */,
 				9853BBA12E9FA7D500951F26 /* Exceptions for "BestProducts" folder in "BestProductsUITests" target */,
 			);
 			path = BestProducts;
