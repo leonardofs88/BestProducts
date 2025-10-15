@@ -32,6 +32,5 @@ class MainAppViewModel: MainAppViewModelProtocol {
                 self?.products = wrapper.products
             }
             .store(in: &cancellables)
-
     }
 }

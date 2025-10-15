@@ -1,5 +1,5 @@
 //
-//  ProductView.swift
+//  ProductListView.swift
 //  BestProducts
 //
 //  Created by Leonardo Soares on 15/10/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProductView: View {
+struct ProductListView: View {
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     @State private(set) var product: Product
@@ -22,7 +22,6 @@ struct ProductView: View {
             Spacer()
             HStack {
                 Text(product.rating, format: .number)
-//                    .fontWeight(.)
                 Image(systemName: .star)
             }
             .foregroundStyle(ratingColorForeground())
@@ -84,7 +83,7 @@ struct ProductView: View {
 }
 
 #Preview {
-    ProductView(
+    ProductListView(
         product: Product(
             id: 1,
             title: "First product",
@@ -96,7 +95,7 @@ struct ProductView: View {
         )
     )
 
-    ProductView(
+    ProductListView(
         product: Product(
             id: 2,
             title: "Second product",
@@ -108,7 +107,7 @@ struct ProductView: View {
         )
     )
 
-    ProductView(
+    ProductListView(
         product: Product(
             id: 3,
             title: "First product",

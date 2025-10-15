@@ -44,7 +44,8 @@
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
-				Views/ProductView.swift,
+				Views/ProductListView.swift,
+				Views/SearchView.swift,
 			);
 			target = 98705B372E9FA0BC001C9A3F /* BestProductsUITests */;
 		};
