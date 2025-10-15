@@ -19,4 +19,8 @@ extension String {
     static var magnifyingGlass : String {
         "magnifyingglass"
     }
+
+    static var textFormatSize: String {
+        "textformat.size"
+    }
 }

@@ -51,7 +51,7 @@ struct SwitchButton: View {
 
 #Preview {
     SwitchButton(
-        buttonType: .image("chevron.right")
+        buttonType: .image(.chevronRight)
     ) { isPressed in
         print(
             isPressed
