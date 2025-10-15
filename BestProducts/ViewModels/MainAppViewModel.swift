@@ -35,24 +35,3 @@ class MainAppViewModel: MainAppViewModelProtocol {
 
     }
 }
-
-import Foundation
-
-protocol ProductRepositoryProtocol {
-    var service: any ServiceProtocol { get }
-    func getProductList() -> AnyPublisher<ProductWrapper, any Error>
-}
-
-class ProductRepository: ProductRepositoryProtocol {
-
-    @Injected(\.service) private(set) var service
-
-    func getProductList() -> AnyPublisher<ProductWrapper, any Error> {
-
-        guard let request = EndpointRouter.https.getURL(for: .products) else {
-            return Fail(outputType: ProductWrapper.self, failure: ServiceError.wrongURL).eraseToAnyPublisher()
-        }
-
-        return service.fetchData(for: request)
-    }
-}
