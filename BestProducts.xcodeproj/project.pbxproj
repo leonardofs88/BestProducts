@@ -41,28 +41,12 @@
 			);
 			target = 98705B372E9FA0BC001C9A3F /* BestProductsUITests */;
 		};
-		9853BBB12E9FA8BD00951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Persistence/BestProducts.xcdatamodeld,
-			);
-			target = 98705B2D2E9FA0BC001C9A3F /* BestProductsTests */;
-		};
-		9853BCD22E9FB1E400951F26 /* Exceptions for "BestProducts" folder in "BestProducts" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Persistence/BestProducts.xcdatamodeld,
-			);
-			target = 98705B1A2E9FA0BB001C9A3F /* BestProducts */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		98705B1D2E9FA0BB001C9A3F /* BestProducts */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				9853BCD22E9FB1E400951F26 /* Exceptions for "BestProducts" folder in "BestProducts" target */,
-				9853BBB12E9FA8BD00951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */,
 				9853BBA12E9FA7D500951F26 /* Exceptions for "BestProducts" folder in "BestProductsUITests" target */,
 			);
 			path = BestProducts;
