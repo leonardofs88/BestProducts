@@ -13,17 +13,55 @@ struct MainAppView: View {
 
     @Injected(\.mainAppViewModel) private var mainAppViewModel
 
+    @State private(set) var isShowingSearch = false
+
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack {
-                    ForEach(mainAppViewModel.products) { item in
-                        ProductView(product: item)
-                            .padding(2)
+            VStack {
+
+                if isShowingSearch {
+                    VStack {
+                        SearchView(
+                            termTags: mainAppViewModel.termTags
+                        ) { searchTerm, filter in
+                            mainAppViewModel.filterProducts(
+                                with: searchTerm,
+                                filter: filter
+                            )
+                        } deleteTag: { mainAppViewModel.removeTag($0) }
+                        clearTags: {
+                            mainAppViewModel.clearTags()
+                        }
+                        .transition(.move(edge: .top))
+                    }
+                }
+                ScrollView {
+                    LazyVStack {
+                        ForEach(mainAppViewModel.filteredProductList) { item in
+                            ProductListView(product: item)
+                                .padding(2)
+                        }
                     }
                 }
             }
-            .navigationTitle("Products")
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Products")
+                        .font(.largeTitle)
+                }
+
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        withAnimation(.bouncy(duration: 0.3)) {
+                            isShowingSearch.toggle()
+                        }
+                    } label: {
+                        Image(systemName: .magnifyingGlass)
+                            .foregroundStyle(.productBackgroundShadow)
+                    }
+                }
+            })
+            .toolbarBackground(.white, for: .bottomBar, .navigationBar)
             .padding()
         }
         .onAppear {
@@ -31,13 +69,6 @@ struct MainAppView: View {
         }
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 #Preview {
     MainAppView()

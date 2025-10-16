@@ -16,7 +16,10 @@ class MainAppViewModel: MainAppViewModelProtocol {
 
     @ObservationIgnored private(set) lazy var cancellables: Set<AnyCancellable> = []
 
-    var products: [Product] = []
+    private(set) var fullProductList: [Product] = []
+    private(set) var filteredProductList: [Product] = []
+
+    var termTags: [TermTag] = []
 
     func getProducts() {
         productRepository.getProductList()
@@ -29,9 +32,54 @@ class MainAppViewModel: MainAppViewModelProtocol {
                     print("Error: ", error)
                 }
             } receiveValue: { [weak self] wrapper in
-                self?.products = wrapper.products
+                self?.fullProductList = wrapper.products
+                self?.filterProducts()
             }
             .store(in: &cancellables)
+    }
 
+    func filterProducts(with term: String = "", filter: FilterOption = .all) {
+        let termTag = TermTag(term: term.trimmingCharacters(in: .whitespacesAndNewlines))
+
+        let filterOptions: String.CompareOptions =  switch filter {
+        case .caseInsensitive:
+            [.caseInsensitive]
+        case .diacriticInsensitive:
+            [.diacriticInsensitive]
+        case .all:
+            [.caseInsensitive, .diacriticInsensitive]
+        case .none:
+            []
+        }
+
+        var bufferTermTags: [TermTag] = termTags
+
+        bufferTermTags.append(termTag)
+
+        if term.last == " ", !termTags.contains(where: { $0.term == term }) {
+            termTags.append(termTag)
+        }
+
+        let terms = term.isEmpty ? termTags.compactMap(\.term) : bufferTermTags.compactMap { $0.term != "" ? $0.term : nil }
+
+        Task { @MainActor in
+            filteredProductList = if terms.isEmpty {
+                fullProductList
+            } else {
+                fullProductList.filter { product in
+                    terms.contains(where: { product.title.range(of: $0, options: filterOptions) != nil })
+                }
+            }
+        }
+    }
+
+    func removeTag(_ id: UUID) {
+        termTags.removeAll { $0.id == id }
+        filterProducts()
+    }
+
+    func clearTags() {
+        termTags.removeAll()
+        filterProducts()
     }
 }

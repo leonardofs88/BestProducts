@@ -15,4 +15,12 @@ extension String {
     static var chevronRight : String {
         "chevron.right"
     }
+
+    static var magnifyingGlass : String {
+        "magnifyingglass"
+    }
+
+    static var textFormatSize: String {
+        "textformat.size"
+    }
 }

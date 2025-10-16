@@ -40,11 +40,13 @@
 				"Error Handling/ServiceError.swift",
 				"Extensions/Strings+Extensions.swift",
 				Models/Product.swift,
+				Models/TermTag.swift,
 				Protocols/MainAppViewModelProtocol.swift,
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
-				Views/ProductView.swift,
+				Views/ProductListView.swift,
+				Views/SearchView.swift,
 			);
 			target = 98705B372E9FA0BC001C9A3F /* BestProductsUITests */;
 		};
@@ -54,6 +56,7 @@
 				"Error Handling/ServiceError.swift",
 				"Extensions/Strings+Extensions.swift",
 				Models/Product.swift,
+				Models/TermTag.swift,
 				Protocols/MainAppViewModelProtocol.swift,
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
