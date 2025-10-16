@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProductListView: View {
-    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     @State private(set) var product: Product
     @State private var tapped: Bool = false

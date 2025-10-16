@@ -10,36 +10,31 @@ import SwiftUI
 struct DetailsView: View {
     @Namespace private var namespace
     @State private var scrollOffset: CGPoint = .zero
+    @State private var scrollHeight: CGFloat = 400
     private(set) var product: Product
+
+    private(set) var minHeight: CGFloat = 300
+    private(set) var maxHeight: CGFloat = 400
 
     var body: some View {
         VStack {
-            VStack(alignment: .center) {
-                if product.imagesURLs.isEmpty {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                } else {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(product.imagesURLs, id: \.self) { imageURL in
-                                AsyncImage(url: imageURL) { phase in
-                                    if let image = phase.image {
-                                        image // Displays the loaded image.
-                                            .resizable()
-                                            .scaledToFit()
-                                    } else if phase.error != nil {
-                                        Color.red // Indicates an error.
-                                    } else {
-                                        Color.blue // Acts as a placeholder.
-                                    }
-                                }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(product.imagesURLs, id: \.absoluteString) { image in
+                        AsyncImage(url: image) { phase in
+                            if let image = phase.image {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
                             }
                         }
                     }
-                    .scrollTargetBehavior(.paging)
                 }
             }
+            .frame(
+                height: scrollHeight
+            )
+            .scrollTargetBehavior(.paging)
 
             ScrollView {
                 Color.clear
@@ -47,134 +42,61 @@ struct DetailsView: View {
 
                 HStack {
                     Text("Name:")
-                        .fontWeight(.bold)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
                     Text(product.title)
+                        .font(.title2)
                 }
+                .padding()
+
                 HStack {
                     Text("Price:")
-                        .fontWeight(.bold)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
                     Text(product.price, format: .currency(code: "EUR"))
+                        .font(.title2)
                 }
+                .padding()
                 HStack {
                     Text("Discount:")
-                        .fontWeight(.bold)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
                     Text(product.discount, format: .percent)
+                        .font(.title2)
                 }
+                .padding()
                 HStack {
                     Text("Stock:")
-                        .fontWeight(.bold)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
                     Text(product.stock, format: .number)
+                        .font(.title2)
                 }
+                .padding()
                 HStack {
                     Text("Rating:")
-                        .fontWeight(.bold)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
                     RatingView(rating: product.rating)
                 }
-                HStack {
-                    Text("Name:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.title)
-                }
-                HStack {
-                    Text("Price:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.price, format: .currency(code: "EUR"))
-                }
-                HStack {
-                    Text("Discount:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.discount, format: .percent)
-                }
-                HStack {
-                    Text("Stock:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.stock, format: .number)
-                }
-                HStack {
-                    Text("Rating:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    RatingView(rating: product.rating)
-                }
-                HStack {
-                    Text("Name:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.title)
-                }
-                HStack {
-                    Text("Price:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.price, format: .currency(code: "EUR"))
-                }
-                HStack {
-                    Text("Discount:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.discount, format: .percent)
-                }
-                HStack {
-                    Text("Stock:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.stock, format: .number)
-                }
-                HStack {
-                    Text("Rating:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    RatingView(rating: product.rating)
-                }
-                HStack {
-                    Text("Name:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.title)
-                }
-                HStack {
-                    Text("Price:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.price, format: .currency(code: "EUR"))
-                }
-                HStack {
-                    Text("Discount:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.discount, format: .percent)
-                }
-                HStack {
-                    Text("Stock:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(product.stock, format: .number)
-                }
-                HStack {
-                    Text("Rating:")
-                        .fontWeight(.bold)
-                    Spacer()
-                    RatingView(rating: product.rating)
-                }
+                .padding()
             } //: ScrollView
-            .onPreferenceChange(ViewOffsetKey.self) { value in
-                if value.y < scrollOffset.y {
-                    print("Scrolling Up")
-                } else if value.y > scrollOffset.y {
-                    print("Scrolling Down")
-                }
-                scrollOffset = value
-            }
             .coordinateSpace(name: namespace)
+            .onPreferenceChange(ViewOffsetKey.self, perform: { value in
+                if value.origin.y < scrollOffset.y {
+                    let scrollingValue = scrollHeight + value.origin.y
+                    scrollHeight = scrollingValue < minHeight ? minHeight : scrollingValue
+                } else if value.origin.y > scrollOffset.y {
+                    let scrollingValue = scrollHeight + value.origin.y
+                    scrollHeight = scrollingValue > maxHeight ? maxHeight : scrollingValue
+                }
+
+            })
         }
     }
 }
@@ -189,7 +111,11 @@ struct DetailsView: View {
             discount: 0.3,
             rating: 3.3,
             stock: 6,
-            images: []
+            images: [
+                "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/1.webp",
+                "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/2.webp",
+                "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/3.webp"
+            ]
         )
     )
 }
