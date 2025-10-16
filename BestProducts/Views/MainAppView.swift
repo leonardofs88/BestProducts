@@ -18,21 +18,29 @@ struct MainAppView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(mainAppViewModel.products) { item in
-                            ProductListView(product: item)
-                                .padding(2)
-                        }
-                    }
-                }
 
                 if isShowingSearch {
                     VStack {
-                        SearchView { searchTerm in
-                            print(searchTerm)
+                        SearchView(
+                            termTags: mainAppViewModel.termTags
+                        ) { searchTerm, filter in
+                            mainAppViewModel.filterProducts(
+                                with: searchTerm,
+                                filter: filter
+                            )
+                        } deleteTag: { mainAppViewModel.removeTag($0) }
+                        clearTags: {
+                            mainAppViewModel.clearTags()
                         }
-                        .transition(.move(edge: .bottom))
+                        .transition(.move(edge: .top))
+                    }
+                }
+                ScrollView {
+                    LazyVStack {
+                        ForEach(mainAppViewModel.filteredProductList) { item in
+                            ProductListView(product: item)
+                                .padding(2)
+                        }
                     }
                 }
             }
@@ -42,11 +50,14 @@ struct MainAppView: View {
                         .font(.largeTitle)
                 }
 
-                ToolbarItemGroup(placement: .bottomBar) {
-                    SwitchButton(buttonType: .image(.magnifyingGlass)) { isPressed in
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
                         withAnimation(.bouncy(duration: 0.3)) {
-                            isShowingSearch = isPressed
+                            isShowingSearch.toggle()
                         }
+                    } label: {
+                        Image(systemName: .magnifyingGlass)
+                            .foregroundStyle(.productBackgroundShadow)
                     }
                 }
             })

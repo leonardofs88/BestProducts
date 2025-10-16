@@ -9,10 +9,20 @@ import SwiftUI
 
 struct SwitchButton: View {
 
-    @State private(set) var isPressed: Bool = false
+    @State private(set) var isPressed: Bool
 
     private(set) var buttonType: AppSysteButtomType
     private(set) var action: (Bool) -> Void
+
+    init(
+        isPressed: Bool = false,
+        buttonType: AppSysteButtomType,
+        action: @escaping (Bool) -> Void
+    ) {
+        self.isPressed = isPressed
+        self.buttonType = buttonType
+        self.action = action
+    }
 
     var body: some View {
         Button {

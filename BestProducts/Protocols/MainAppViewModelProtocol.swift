@@ -11,7 +11,12 @@ import Combine
 protocol MainAppViewModelProtocol {
     var productRepository: ProductRepositoryProtocol { get }
     var cancellables: Set<AnyCancellable> { get }
-    var products: [Product] { get }
+    var fullProductList: [Product] { get }
+    var filteredProductList: [Product] { get }
+    var termTags: [TermTag] { get set }
 
     func getProducts()
+    func filterProducts(with term: String, filter: FilterOption)
+    func removeTag(_ id: UUID)
+    func clearTags()
 }

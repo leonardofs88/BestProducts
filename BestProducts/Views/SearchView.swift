@@ -8,10 +8,28 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private(set) var searchTerm: String = ""
-    @State private(set) var termTags: [TermTag] = []
 
-    private(set) var searchAction: (String) -> Void
+    @State private(set) var searchTerm: String = ""
+    @State private(set) var caseInsensitive: Bool = true {
+        didSet {
+            filterState()
+        }
+    }
+
+    @State private(set) var diacriticInsesitive: Bool = true {
+        didSet {
+            filterState()
+        }
+    }
+
+    @State private(set) var filter: FilterOption = .all
+
+    private(set) var termTags: [TermTag]
+
+    private(set) var searchAction: (String, FilterOption) -> Void
+
+    private(set) var deleteTag: (UUID) -> Void
+    private(set) var clearTags: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -28,7 +46,7 @@ struct SearchView: View {
                             Text(tag.term)
                             Button {
                                 withAnimation {
-                                    termTags.removeAll(where: { $0.term == tag.term })
+                                    deleteTag(tag.id)
                                 }
                             } label: {
                                 Image(systemName: "x.circle.fill")
@@ -42,48 +60,64 @@ struct SearchView: View {
             }
 
             HStack {
-                SwitchButton(buttonType: .image(.textFormatSize)) { isPressed in
-                    print("filter by font size? ", isPressed)
+                SwitchButton(
+                    isPressed: caseInsensitive,
+                    buttonType: .image(.textFormatSize)
+                ) { isPressed in
+                    caseInsensitive = isPressed
                 }
 
-                SwitchButton(buttonType: .text("àéö")) { isPressed in
-                    print("filter by font accentuation? ", isPressed)
+                SwitchButton(
+                    isPressed: diacriticInsesitive,
+                    buttonType: .text("àéö")
+                ) { isPressed in
+                    diacriticInsesitive = isPressed
                 }
 
                 if !termTags.isEmpty {
                     SystemButtom(buttonType: .text("Clear filter")) {
-                        print("filter cleared")
+                        withAnimation {
+                            clearTags()
+                        }
                     }
                 }
             }
             .padding(.top, 5)
         }
         .padding()
-        .onChange(of: searchTerm) { oldTerm, newTerm in
-            guard newTerm != " ", !newTerm.isEmpty else {
+        .onChange(of: searchTerm) { _, newTerm in
+            guard newTerm != " " else {
                 searchTerm = ""
                 return
             }
 
-            if newTerm.contains(" ") && newTerm.first != " " {
-                withAnimation {
-                    termTags.append(TermTag(term: oldTerm))
-                }
-
+            if newTerm.last == " " {
                 searchTerm = ""
-                searchAction(newTerm)
             }
+
+            searchAction(newTerm, filter)
         }
+    }
+
+    func filterState() {
+        if caseInsensitive {
+            filter = .caseInsensitive
+        } else if diacriticInsesitive {
+            filter = .diacriticInsensitive
+        } else if caseInsensitive && diacriticInsesitive {
+            filter = .all
+        } else {
+            filter = .none
+        }
+        searchAction(searchTerm, filter)
     }
 }
 
 #Preview {
-    SearchView { searchTerm in
-        print("search term: \(searchTerm)")
-    }
-}
-
-struct TermTag: Identifiable {
-    var id: UUID = UUID()
-    var term: String
+    SearchView(
+        termTags: []
+    ) { searchTerm, filter in
+        print("search term: \(searchTerm) with filter: \(filter)")
+    } deleteTag: { print("delete tag ID: \($0)") }
+    clearTags: { print("Tags cleared") }
 }
