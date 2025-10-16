@@ -45,6 +45,7 @@
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				Views/DemoScrollViewOffsetView.swift,
 				Views/DetailsView.swift,
 				Views/ProductListView.swift,
 				Views/SearchView.swift,
