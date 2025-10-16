@@ -100,12 +100,12 @@ struct SearchView: View {
     }
 
     func filterState() {
-        if caseInsensitive {
-            filter = .caseInsensitive
+        if caseInsensitive && diacriticInsesitive {
+            filter = .all
         } else if diacriticInsesitive {
             filter = .diacriticInsensitive
-        } else if caseInsensitive && diacriticInsesitive {
-            filter = .all
+        } else if caseInsensitive {
+            filter = .caseInsensitive
         } else {
             filter = .none
         }
@@ -120,4 +120,11 @@ struct SearchView: View {
         print("search term: \(searchTerm) with filter: \(filter)")
     } deleteTag: { print("delete tag ID: \($0)") }
     clearTags: { print("Tags cleared") }
+}
+
+enum FilterOption {
+    case caseInsensitive
+    case diacriticInsensitive
+    case all
+    case none
 }

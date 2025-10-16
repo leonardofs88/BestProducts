@@ -54,20 +54,21 @@ class MainAppViewModel: MainAppViewModelProtocol {
 
         var bufferTermTags: [TermTag] = termTags
 
-        print(filterOptions)
         bufferTermTags.append(termTag)
 
         if term.last == " ", !termTags.contains(where: { $0.term == term }) {
             termTags.append(termTag)
         }
 
-        let terms = bufferTermTags.compactMap { $0.term != "" ? $0.term : nil }
+        let terms = term.isEmpty ? termTags.compactMap(\.term) : bufferTermTags.compactMap { $0.term != "" ? $0.term : nil }
 
         Task { @MainActor in
             filteredProductList = if terms.isEmpty {
                 fullProductList
             } else {
-                fullProductList.filter({ $0.title.range(of: term, options: filterOptions) != nil })
+                fullProductList.filter { product in
+                    terms.contains(where: { product.title.range(of: $0, options: filterOptions) != nil })
+                }
             }
         }
     }
@@ -81,17 +82,4 @@ class MainAppViewModel: MainAppViewModelProtocol {
         termTags.removeAll()
         filterProducts()
     }
-}
-
-extension String {
-    func contains(_ strings: [String], options: String.CompareOptions? = nil) -> Bool {
-        strings.contains { contains($0) }
-    }
-}
-
-enum FilterOption {
-    case caseInsensitive
-    case diacriticInsensitive
-    case all
-    case none
 }
