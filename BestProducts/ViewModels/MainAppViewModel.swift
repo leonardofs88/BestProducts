@@ -67,7 +67,11 @@ class MainAppViewModel: MainAppViewModelProtocol {
                 fullProductList
             } else {
                 fullProductList.filter { product in
-                    terms.contains(where: { product.title.range(of: $0, options: filterOptions) != nil })
+                    terms.contains(
+                        where: {
+                            (product.title.range(of: $0, options: filterOptions) != nil)
+                            && (product.description.range(of: $0, options: filterOptions) != nil)
+                        })
                 }
             }
         }

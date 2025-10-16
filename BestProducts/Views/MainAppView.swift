@@ -16,7 +16,7 @@ struct MainAppView: View {
     @State private(set) var isShowingSearch = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
 
                 if isShowingSearch {
@@ -44,6 +44,12 @@ struct MainAppView: View {
                     }
                 }
             }
+            .navigationDestination(for: Router.self, destination: { route in
+                switch route {
+                case .details(let product):
+                    DetailsView(product: product)
+                }
+            })
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     Text("Products")

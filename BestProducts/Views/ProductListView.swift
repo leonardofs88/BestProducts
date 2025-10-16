@@ -15,24 +15,16 @@ struct ProductListView: View {
 
     var body: some View {
         HStack {
-            Text(product.title)
-                .fontWeight(.medium)
-            .padding(2)
+            NavigationLink(value: Router.details(product)) {
+                Text(product.title)
+                    .fontWeight(.medium)
+                .padding(2)
 
-            Spacer()
-            HStack {
-                Text(product.rating, format: .number)
-                Image(systemName: .star)
+                Spacer()
+                RatingView(rating: product.rating)
+                Image(systemName: .chevronRight)
             }
-            .foregroundStyle(ratingColorForeground())
-            .padding(.horizontal, 6)
-            .padding(.vertical, 3)
-            .background(
-                ratingColorBackground()
-                    .clipShape(Capsule())
-                )
-            Image(systemName: .chevronRight)
-
+            .foregroundStyle(.productBackgroundShadow)
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -58,28 +50,6 @@ struct ProductListView: View {
         )
         .scaleEffect(tapped ? 0.98 : 1)
     }
-
-    func ratingColorForeground() -> Color {
-        switch product.rating {
-        case ..<3:
-            return .lowRatingForeground
-        case 3..<4:
-                return .mediumRatingForeground
-        default:
-            return .highRatingForeground
-        }
-    }
-
-    func ratingColorBackground() -> Color {
-        switch product.rating {
-        case ..<3:
-            return .lowRating
-        case 3..<4:
-            return .mediumRating
-        default:
-            return .highRating
-        }
-    }
 }
 
 #Preview {
@@ -87,6 +57,7 @@ struct ProductListView: View {
         product: Product(
             id: 1,
             title: "First product",
+            description: "Some product Description",
             price: 10.0,
             discount: 2.0,
             rating: 3.2,
@@ -99,6 +70,7 @@ struct ProductListView: View {
         product: Product(
             id: 2,
             title: "Second product",
+            description: "One product Description",
             price: 10.0,
             discount: 2.0,
             rating: 4.1,
@@ -111,6 +83,7 @@ struct ProductListView: View {
         product: Product(
             id: 3,
             title: "First product",
+            description: "Last product Description",
             price: 10.0,
             discount: 2.0,
             rating: 2.0,
@@ -118,4 +91,8 @@ struct ProductListView: View {
             images: []
         )
     )
+}
+
+enum Router: Hashable {
+    case details(Product)
 }
