@@ -22,21 +22,21 @@ struct SearchView: View {
                 Divider()
                     .background(.productBackgroundShadow)
 
-                ViewThatFits(in: .horizontal) {
-                    HStack {
-                        ForEach(termTags) { tag in
-                            HStack {
-                                Text(tag.term)
-                                Button {
-
-                                } label: {
-                                    Image(systemName: "x.circle.fill")
+                DynamicHStack {
+                    ForEach(termTags) { tag in
+                        HStack {
+                            Text(tag.term)
+                            Button {
+                                withAnimation {
+                                    termTags.removeAll(where: { $0.term == tag.term })
                                 }
+                            } label: {
+                                Image(systemName: "x.circle.fill")
                             }
-                            .padding(3)
-                            .foregroundStyle(.white)
-                            .background(Color.black)
                         }
+                        .padding(3)
+                        .foregroundStyle(.white)
+                        .background(Color.black)
                     }
                 }
             }
@@ -49,6 +49,12 @@ struct SearchView: View {
                 SwitchButton(buttonType: .text("àéö")) { isPressed in
                     print("filter by font accentuation? ", isPressed)
                 }
+
+                if !termTags.isEmpty {
+                    SystemButtom(buttonType: .text("Clear filter")) {
+                        print("filter cleared")
+                    }
+                }
             }
             .padding(.top, 5)
         }
@@ -60,9 +66,12 @@ struct SearchView: View {
             }
 
             if newTerm.contains(" ") && newTerm.first != " " {
-                termTags.append(TermTag(term: oldTerm))
-                searchAction(newTerm)
+                withAnimation {
+                    termTags.append(TermTag(term: oldTerm))
+                }
+
                 searchTerm = ""
+                searchAction(newTerm)
             }
         }
     }
