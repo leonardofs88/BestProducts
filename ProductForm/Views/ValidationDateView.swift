@@ -11,7 +11,7 @@ struct ValidationDateView: View {
 
     @State private(set) var message: [String] = []
 
-    @Binding private(set) var date: Date
+    @State private(set) var date: Date
     @State private(set) var managedDate: Date = Date()
 
     let description: String
@@ -62,7 +62,7 @@ struct ValidationDateView: View {
 
 #Preview {
     ValidationDateView(
-        date: .constant(Date()),
+        date: Date(),
         description: "Delivery Date (not monday)",
         dateValidators: [.invalidDays([.monday])]
     ) { isValid in
@@ -70,7 +70,7 @@ struct ValidationDateView: View {
     }
 
     ValidationDateView(
-        date: .constant(Date()),
+        date: Date(),
         description: "Delivery Date (not future)",
         dateValidators: [.future]
     ) { isValid in
@@ -78,7 +78,7 @@ struct ValidationDateView: View {
     }
 
     ValidationDateView(
-        date: .constant(Date()),
+        date: Date(),
         description: "Delivery Date (combined)",
         dateValidators: [.future, .invalidDays([.monday])]
     ) { isValid in

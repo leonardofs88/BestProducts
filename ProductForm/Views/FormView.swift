@@ -8,54 +8,50 @@
 import SwiftUI
 
 struct FormView: View {
-    @State private var name: String = ""
-    @State private var email: String = ""
-    @State private var number: String = ""
-    @State private var promoCode: String = ""
-    @State private var saveButtonDisabled = true
-    @State private var date: Date = Date()
+
+    @Injected(\.formViewModel) var formViewModel
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 ValidationTextFieldView(
-                    text: $name,
+                    text: formViewModel.formModel.name,
                     fieldType: .text(),
                     placeholder: "Name"
                 ) { isValid in
-                    print("Name is valid?", isValid)
+                    formViewModel.validateName(isValid)
                 }
 
                 ValidationTextFieldView(
-                    text: $email,
+                    text: formViewModel.formModel.email,
                     fieldType: .text(validations: [.email]),
                     placeholder: "E-mail"
                 ) { isValid in
-                    print("E-mail is valid?", isValid)
+                    formViewModel.validateEmail(isValid)
                 }
 
                 ValidationTextFieldView(
-                    text: $number,
+                    text: "\(formViewModel.formModel.number)",
                     fieldType: .number,
                     placeholder: "Number"
                 ) { isValid in
-                    print("Number is valid?", isValid)
+                    formViewModel.validateNumber(isValid)
                 }
 
                 ValidationTextFieldView(
-                    text: $promoCode,
+                    text: formViewModel.formModel.promoCode,
                     fieldType: .text(validations: [.promoCode, .min(3), .max(7)]),
                     placeholder: "Promo Code"
                 ) { isValid in
-                    print("Promo Code is valid?", isValid)
+                    formViewModel.validatePromoCode(isValid)
                 }
 
                 ValidationDateView(
-                    date: $date,
+                    date: formViewModel.formModel.deliveryDate,
                     description: "Delivery Date",
                     dateValidators: [.future, .invalidDays([.monday])]
                 ) { isValid in
-                    print("Date is valid: ", isValid)
+                    formViewModel.validateDelivery(isValid)
                 }
 
                 ValidationPickerView(description: "Evaluation", selection: Evaluation.bad)
@@ -69,8 +65,8 @@ struct FormView: View {
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
-                    SystemButtom(buttonType: .text("Save"), isDisabled: saveButtonDisabled) {
-
+                    SystemButtom(buttonType: .text("Save"), isDisabled: !formViewModel.formIsValid) {
+                        formViewModel.saveForm()
                     }
                 }
             }
@@ -80,4 +76,12 @@ struct FormView: View {
 
 #Preview {
     FormView()
+}
+
+import Factory
+
+extension Container {
+    var formViewModel: Factory<FormViewModelProtocol> {
+        self { FormViewModel() }
+    }
 }

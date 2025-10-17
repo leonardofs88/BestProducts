@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct ValidationTextFieldView: View {
-    @Binding private(set) var text: String
+
+    @State private(set) var text: String
     @State private(set) var message: [String] = []
 
     @State private var managedText: String = ""
     @State private var isUppercased: Bool = false
     @State private var managedNumber: Int?
+
+    @FocusState private var isFocused: Bool
 
     let fieldType: FieldType
     let placeholder: String
@@ -23,6 +26,7 @@ struct ValidationTextFieldView: View {
     var body: some View {
         VStack(alignment: .leading) {
             getView()
+                .focused($isFocused)
                 .padding(.horizontal)
                 .padding(.vertical, 10)
                 .font(.title2)
@@ -32,6 +36,16 @@ struct ValidationTextFieldView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.white)
                 )
+                .onChange(of: isFocused) { oldValue, newValue in
+                    if !oldValue, newValue {
+                        switch fieldType {
+                            case .number:
+                                validate(managedNumber)
+                            case .text(validations: let validations):
+                                validate(managedText, with: validations)
+                        }
+                    }
+                }
 
             if !message.isEmpty {
                 ForEach(message, id: \.self) { message in
@@ -47,6 +61,33 @@ struct ValidationTextFieldView: View {
         .padding(.vertical, 10)
     }
 
+    private func validate(_ value: String, with validations: [ValidationType]?) {
+        message.removeAll()
+        guard !value.isEmpty else {
+            message.append("This field is required.")
+            return
+        }
+
+        validations?.forEach { validator in
+            if let validationMessage = validator.getMessage(value) {
+                message.append(validationMessage)
+            }
+        }
+
+        validation(message.isEmpty)
+    }
+
+    func validate(_ value: Int?) {
+        message.removeAll()
+        if let value {
+            text = "\(value)"
+        } else {
+            message.append("Please enter a number.")
+        }
+
+        validation(message.isEmpty)
+    }
+
     @ViewBuilder func getView() -> some View {
         switch fieldType {
             case .text(let validations):
@@ -57,20 +98,8 @@ struct ValidationTextFieldView: View {
                         .font(.title2)
                         .foregroundStyle(.productBackgroundShadow)
                 )
-                .onChange(of: managedText) { old, newValue in
-                    message.removeAll()
-                    guard !newValue.isEmpty else {
-                        message.append("This field is required.")
-                        return
-                    }
-
-                    validations?.forEach { validator in
-                        if let validationMessage = validator.getMessage(newValue) {
-                            message.append(validationMessage)
-                        }
-                    }
-
-                    validation(message.isEmpty)
+                .onChange(of: managedText) { _, newValue in
+                    validate(newValue, with: validations)
                 }
                 .onAppear {
                     managedText = text
@@ -86,13 +115,7 @@ struct ValidationTextFieldView: View {
                 )
                 .keyboardType(.numberPad)
                 .onChange(of: managedNumber, initial: false) { _, newValue in
-                    message.removeAll()
-                    if let newValue {
-                        text = "\(newValue)"
-                    } else {
-                        message.append("Please enter a number.")
-                    }
-                    validation(message.isEmpty)
+                    validate(newValue)
                 }
                 .onAppear {
                     managedNumber = Int(text)
@@ -103,7 +126,7 @@ struct ValidationTextFieldView: View {
 
 #Preview {
     ValidationTextFieldView(
-        text: .constant("Name"),
+        text: "Name",
         fieldType: .text(),
         placeholder: "Name"
     ) { isValid in
@@ -111,7 +134,7 @@ struct ValidationTextFieldView: View {
     }
 
     ValidationTextFieldView(
-        text: .constant("leonardo@email.com"),
+        text: "leonardo@email.com",
         fieldType: .text(validations: [.email]),
         placeholder: "E-mail"
     ) { isValid in
@@ -119,7 +142,7 @@ struct ValidationTextFieldView: View {
     }
 
     ValidationTextFieldView(
-        text: .constant(""),
+        text: "",
         fieldType: .number,
         placeholder: "Number"
     ) { isValid in
@@ -127,7 +150,7 @@ struct ValidationTextFieldView: View {
     }
 
     ValidationTextFieldView(
-        text: .constant("ÁÉÖ"),
+        text: "ÁÉÖ",
         fieldType: .text(validations: [.promoCode, .min(3), .max(7)]),
         placeholder: "Promo Code"
     ) { isValid in

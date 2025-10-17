@@ -38,18 +38,6 @@ struct ValidationPickerView<E: MenuPickItem>: View {
     }
 }
 
-protocol MenuPickItem: Hashable, CaseIterable, Identifiable {}
-
-enum Evaluation: String, MenuPickItem {
-    case bad
-    case regular
-    case good
-    case veryGood
-    case excelent
-
-    var id: Self { self }
-}
-
 #Preview {
     ValidationPickerView(description: "Picker", selection: Evaluation.bad)
 }
