@@ -18,7 +18,6 @@ struct FormView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                
                 ValidationTextFieldView(
                     text: $name,
                     fieldType: .text(),
@@ -58,14 +57,15 @@ struct FormView: View {
                 ) { isValid in
                     print("Date is valid: ", isValid)
                 }
+
+                ValidationPickerView(description: "Evaluation", selection: Evaluation.bad)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Validated Form")
+                    Text("Validation Form")
                         .font(.largeTitle)
-
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {

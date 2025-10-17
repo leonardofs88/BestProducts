@@ -94,6 +94,7 @@
 			membershipExceptions = (
 				Views/FormView.swift,
 				Views/ValidationDateView.swift,
+				Views/ValidationPickerView.swift,
 			);
 			target = 98017E432EA1A7E500393AE7 /* ProductFormUITests */;
 		};
