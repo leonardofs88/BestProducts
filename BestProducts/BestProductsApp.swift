@@ -12,7 +12,11 @@ struct BestProductsApp: App {
 
     var body: some Scene {
         WindowGroup {
+            #if PRODUCTS
             MainAppView()
+            #elseif FORMS
+            FormView()
+            #endif
         }
     }
 }

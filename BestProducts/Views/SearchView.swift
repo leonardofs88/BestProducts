@@ -25,9 +25,7 @@ struct SearchView: View {
     @State private(set) var filter: FilterOption = .all
 
     private(set) var termTags: [TermTag]
-
     private(set) var searchAction: (String, FilterOption) -> Void
-
     private(set) var deleteTag: (UUID) -> Void
     private(set) var clearTags: () -> Void
 
