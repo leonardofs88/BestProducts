@@ -45,7 +45,7 @@ struct ValidationTextFieldView: View {
 
     @ViewBuilder func getView() -> some View {
         switch validationType {
-            case .email, .empty:
+            case .email, .empty, .promoCode(min: _, max: _):
                 TextField(
                     placeholder,
                     text: $managedText,
@@ -131,10 +131,7 @@ enum ValidationType {
                 let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
                 return emailPred.evaluate(with: value) ? nil : "Invalid email format"
             case .promoCode(min: let min, max: let max):
-                guard value.count >= min && value.count <= max else {
-                    return "Promo code is not in the range"
-                }
-                
+                return value.count >= min && value.count <= max ? nil : "Promo code is not in the range"
         }
     }
 }
