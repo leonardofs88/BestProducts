@@ -14,7 +14,9 @@ Go to the [Repository](https://github.com/leonardofs88/BestProducts) page and cl
 
 After the project is cloned, it's just necessary to open the **BestProducts.xcodeproj**. 
 
-> **_NOTE:_**  To be fully able to build the product, the developer must change the **Team** at **Signing & Capabilities** on the target's configuration.
+> **_NOTE 1:_**  To be fully able to build the product, the developer must assure that the current branch is **main**.
+
+> **_NOTE 2:_**  To be fully able to build the product, the developer must change the **Team** at **Signing & Capabilities** on the target's configuration.
 
 ### Run Targets
 
