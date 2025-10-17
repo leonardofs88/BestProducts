@@ -76,8 +76,3 @@ struct SwitchButton: View {
         )
     }
 }
-
-enum AppSysteButtomType {
-    case image(String)
-    case text(String)
-}

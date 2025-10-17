@@ -7,6 +7,8 @@
 
 import Factory
 
+// MARK: - Containers for Best Products Target only
+
 extension Container {
     var mainAppViewModel: Factory<MainAppViewModelProtocol> {
         self { MainAppViewModel() }

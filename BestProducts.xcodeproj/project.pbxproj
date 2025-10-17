@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98017EDE2EA2405C00393AE7 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 98017EDD2EA2405C00393AE7 /* Factory */; };
 		9816B7B02E9FA55900853C98 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 9816B7AF2E9FA55900853C98 /* Factory */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,12 @@
 			membershipExceptions = (
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/AppSysteButtomType.swift,
+				"Shared/Extensions/Strings+Extensions.swift",
+				"Shared/Extensions/View+Extensions.swift",
+				Shared/Utilities/EndpointRouter.swift,
+				Shared/Utilities/ViewOffsetKey.swift,
+				Views/Components/SystemButtom.swift,
 			);
 			target = 98017E2D2EA1A7E400393AE7 /* ProductForm */;
 		};
@@ -63,6 +70,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Assets.xcassets,
+				"Shared/Extensions/Strings+Extensions.swift",
+				"Shared/Extensions/View+Extensions.swift",
+				Shared/Utilities/EndpointRouter.swift,
+				Shared/Utilities/ViewOffsetKey.swift,
 			);
 			target = 98017E392EA1A7E500393AE7 /* ProductFormTests */;
 		};
@@ -71,13 +82,18 @@
 			membershipExceptions = (
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
+				"Shared/Extensions/Strings+Extensions.swift",
+				"Shared/Extensions/View+Extensions.swift",
+				Shared/Utilities/EndpointRouter.swift,
+				Shared/Utilities/ViewOffsetKey.swift,
 			);
 			target = 98017E432EA1A7E500393AE7 /* ProductFormUITests */;
 		};
 		98017EC42EA1C97B00393AE7 /* Exceptions for "ProductForm" folder in "ProductFormUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				FormView.swift,
+				Views/FormView.swift,
+				Views/ValidationDateView.swift,
 			);
 			target = 98017E432EA1A7E500393AE7 /* ProductFormUITests */;
 		};
@@ -85,14 +101,18 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BestProductsApp.swift,
+				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
-				"Extensions/Strings+Extensions.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
 				Protocols/MainAppViewModelProtocol.swift,
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				"Shared/Extensions/Strings+Extensions.swift",
+				"Shared/Extensions/View+Extensions.swift",
+				Shared/Utilities/EndpointRouter.swift,
+				Shared/Utilities/ViewOffsetKey.swift,
 				Views/DetailsView.swift,
 				Views/ProductListView.swift,
 				Views/SearchView.swift,
@@ -102,14 +122,18 @@
 		9853BD4B2EA0213400951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
-				"Extensions/Strings+Extensions.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
 				Protocols/MainAppViewModelProtocol.swift,
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				"Shared/Extensions/Strings+Extensions.swift",
+				"Shared/Extensions/View+Extensions.swift",
+				Shared/Utilities/EndpointRouter.swift,
+				Shared/Utilities/ViewOffsetKey.swift,
 			);
 			target = 98705B2D2E9FA0BC001C9A3F /* BestProductsTests */;
 		};
@@ -163,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98017EDE2EA2405C00393AE7 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +276,7 @@
 			);
 			name = ProductForm;
 			packageProductDependencies = (
+				98017EDD2EA2405C00393AE7 /* Factory */,
 			);
 			productName = ProductForm;
 			productReference = 98017E2E2EA1A7E400393AE7 /* ProductForm.app */;
@@ -1077,6 +1103,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		98017EDD2EA2405C00393AE7 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9816B7AE2E9FA55900853C98 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
 		9816B7AF2E9FA55900853C98 /* Factory */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9816B7AE2E9FA55900853C98 /* XCRemoteSwiftPackageReference "Factory" */;
