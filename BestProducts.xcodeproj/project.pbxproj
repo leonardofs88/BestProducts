@@ -59,6 +59,7 @@
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
 				Shared/Enumerations/AppSysteButtomType.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Utilities/EndpointRouter.swift,
@@ -71,6 +72,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Assets.xcassets,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Utilities/EndpointRouter.swift,
@@ -83,6 +85,7 @@
 			membershipExceptions = (
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Utilities/EndpointRouter.swift,
@@ -103,7 +106,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BestProductsApp.swift,
-				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
@@ -111,6 +113,7 @@
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Utilities/EndpointRouter.swift,
@@ -124,7 +127,6 @@
 		9853BD4B2EA0213400951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
@@ -132,6 +134,7 @@
 				Protocols/ProductRepositoryProtocol.swift,
 				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Utilities/EndpointRouter.swift,
