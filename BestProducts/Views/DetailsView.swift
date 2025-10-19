@@ -5,36 +5,57 @@
 //  Created by Leonardo Soares on 16/10/2025.
 //
 
+import Kingfisher
 import SwiftUI
 
 struct DetailsView: View {
     @Namespace private var namespace
     @State private var scrollOffset: CGPoint = .zero
     @State private var scrollHeight: CGFloat = 400
-    private(set) var product: Product
+    let product: Product
 
-    private(set) var minHeight: CGFloat = 300
-    private(set) var maxHeight: CGFloat = 400
+    let minHeight: CGFloat = 300
+    let maxHeight: CGFloat = 400
 
     var body: some View {
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(product.imagesURLs, id: \.absoluteString) { image in
-                        AsyncImage(url: image) { phase in
-                            if let image = phase.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            }
+            GeometryReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    let processor = DownsamplingImageProcessor(size: proxy.size)
+                    HStack {
+                        ForEach(product.imagesURLs, id: \.absoluteString) { image in
+                            KFImage.url(image)
+                                .placeholder { progress in
+                                    ProgressView(value: progress.fractionCompleted)
+                                }
+                                .setProcessor(processor)
+                                .loadDiskFileSynchronously()
+                                .cacheMemoryOnly()
+                                .fade(duration: 0.25)
+                                .onFailureView {
+                                    HStack(alignment: .center) {
+                                        Image(systemName: "icloud.slash")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .padding()
+                                            .frame(width: 200, height: 200)
+                                        VStack(alignment: .center) {
+                                            Text("Couldn't load image.")
+                                                .font(.title2)
+                                        }
+                                    }
+                                    .padding()
+                                    .foregroundStyle(Color.productBackgroundShadow)
+                                }
+                                .frame(
+                                    width: proxy.size.width,
+                                    height: scrollHeight
+                                )
                         }
                     }
                 }
+                .scrollTargetBehavior(.paging)
             }
-            .frame(
-                height: scrollHeight
-            )
-            .scrollTargetBehavior(.paging)
 
             ScrollView {
                 Color.clear
