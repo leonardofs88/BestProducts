@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		98017EDE2EA2405C00393AE7 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 98017EDD2EA2405C00393AE7 /* Factory */; };
 		9816B7B02E9FA55900853C98 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 9816B7AF2E9FA55900853C98 /* Factory */; };
+		98BAA25A2EA5186800E8DD01 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 98BAA2592EA5186800E8DD01 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98BAA25A2EA5186800E8DD01 /* Kingfisher in Frameworks */,
 				9816B7B02E9FA55900853C98 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +350,7 @@
 			name = BestProducts;
 			packageProductDependencies = (
 				9816B7AF2E9FA55900853C98 /* Factory */,
+				98BAA2592EA5186800E8DD01 /* Kingfisher */,
 			);
 			productName = BestProducts;
 			productReference = 98705B1B2E9FA0BB001C9A3F /* BestProducts.app */;
@@ -445,6 +448,7 @@
 			packageReferences = (
 				9816B7AB2E9FA4E100853C98 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				9816B7AE2E9FA55900853C98 /* XCRemoteSwiftPackageReference "Factory" */,
+				98BAA2582EA5186800E8DD01 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 98705B1C2E9FA0BB001C9A3F /* Products */;
@@ -1103,6 +1107,14 @@
 				minimumVersion = 2.5.3;
 			};
 		};
+		98BAA2582EA5186800E8DD01 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1120,6 +1132,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9816B7AB2E9FA4E100853C98 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		98BAA2592EA5186800E8DD01 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98BAA2582EA5186800E8DD01 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
