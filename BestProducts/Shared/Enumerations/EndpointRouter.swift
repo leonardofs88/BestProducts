@@ -7,16 +7,12 @@
 
 import Foundation
 
-enum EndpointRouter: String {
+enum EndpointRouter: String, EndpointProtocol {
     case http = "http://"
     case https = "https://"
 
     var domain: URL? {
         URL(string: "\(self.rawValue)dummyjson.com/")
-    }
-
-    enum Endpoint: String {
-        case products
     }
 
     func getURL(for type: Endpoint) -> URLRequest? {

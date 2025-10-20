@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		98017EDE2EA2405C00393AE7 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 98017EDD2EA2405C00393AE7 /* Factory */; };
 		9816B7B02E9FA55900853C98 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 9816B7AF2E9FA55900853C98 /* Factory */; };
+		986603712EA64E8F004D9FA0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 986603702EA64E8F004D9FA0 /* Kingfisher */; };
 		98BAA25A2EA5186800E8DD01 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 98BAA2592EA5186800E8DD01 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -59,9 +60,11 @@
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
 				Shared/Enumerations/AppSysteButtomType.swift,
+				Shared/Enumerations/Endpoint.swift,
+				Shared/Enumerations/EndpointRouter.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
-				Shared/Utilities/EndpointRouter.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
 				Views/Components/SystemButtom.swift,
 			);
@@ -71,9 +74,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Assets.xcassets,
+				Shared/Enumerations/Endpoint.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
-				Shared/Utilities/EndpointRouter.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
 			);
 			target = 98017E392EA1A7E500393AE7 /* ProductFormTests */;
@@ -83,10 +87,13 @@
 			membershipExceptions = (
 				BestProductsApp.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/AppSysteButtomType.swift,
+				Shared/Enumerations/Endpoint.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
-				Shared/Utilities/EndpointRouter.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
+				Views/Components/SystemButtom.swift,
 			);
 			target = 98017E432EA1A7E500393AE7 /* ProductFormUITests */;
 		};
@@ -103,18 +110,24 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BestProductsApp.swift,
-				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
-				Protocols/MainAppViewModelProtocol.swift,
-				Protocols/ProductRepositoryProtocol.swift,
-				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/AppSysteButtomType.swift,
+				Shared/Enumerations/Endpoint.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
-				Shared/Utilities/EndpointRouter.swift,
+				Shared/Protocols/EndpointProtocol.swift,
+				Shared/Protocols/MainAppViewModelProtocol.swift,
+				Shared/Protocols/ProductRepositoryProtocol.swift,
+				Shared/Protocols/ServiceProtocol.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
+				Views/Components/DynamicHStack.swift,
+				Views/Components/RatingView.swift,
+				Views/Components/SwitchButton.swift,
+				Views/Components/SystemButtom.swift,
 				Views/DetailsView.swift,
 				Views/ProductListView.swift,
 				Views/SearchView.swift,
@@ -124,17 +137,18 @@
 		9853BD4B2EA0213400951F26 /* Exceptions for "BestProducts" folder in "BestProductsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Containers/Container+Extensions.swift",
 				"Error Handling/ServiceError.swift",
 				Models/Product.swift,
 				Models/TermTag.swift,
-				Protocols/MainAppViewModelProtocol.swift,
-				Protocols/ProductRepositoryProtocol.swift,
-				Protocols/ServiceProtocol.swift,
 				Resources/Assets.xcassets,
+				Shared/Enumerations/Endpoint.swift,
+				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
-				Shared/Utilities/EndpointRouter.swift,
+				Shared/Protocols/EndpointProtocol.swift,
+				Shared/Protocols/MainAppViewModelProtocol.swift,
+				Shared/Protocols/ProductRepositoryProtocol.swift,
+				Shared/Protocols/ServiceProtocol.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
 			);
 			target = 98705B2D2E9FA0BC001C9A3F /* BestProductsTests */;
@@ -227,6 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				986603712EA64E8F004D9FA0 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +412,7 @@
 			);
 			name = BestProductsUITests;
 			packageProductDependencies = (
+				986603702EA64E8F004D9FA0 /* Kingfisher */,
 			);
 			productName = BestProductsUITests;
 			productReference = 98705B382E9FA0BC001C9A3F /* BestProductsUITests.xctest */;
@@ -1132,6 +1148,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9816B7AB2E9FA4E100853C98 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		986603702EA64E8F004D9FA0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98BAA2582EA5186800E8DD01 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		98BAA2592EA5186800E8DD01 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

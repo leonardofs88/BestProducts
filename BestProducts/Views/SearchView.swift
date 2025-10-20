@@ -119,10 +119,3 @@ struct SearchView: View {
     } deleteTag: { print("delete tag ID: \($0)") }
     clearTags: { print("Tags cleared") }
 }
-
-enum FilterOption {
-    case caseInsensitive
-    case diacriticInsensitive
-    case all
-    case none
-}
