@@ -10,21 +10,19 @@ import Foundation
 
 class Service: ServiceProtocol {
 
-    let urlSession = URLSession(configuration: .default)
+    let urlSession: URLSession? = URLSession(configuration: .default)
 
-    func fetchData<T: Codable>(for request: URLRequest) -> AnyPublisher<T, any Error> {
-        urlSession
+    func fetchData(for request: URLRequest) -> AnyPublisher<Data, any Error> {
+        guard let urlSession else {
+            return Fail(
+                outputType: Data.self,
+                failure: ServiceError.invalidSession
+            ).eraseToAnyPublisher()
+        }
+        return urlSession
             .dataTaskPublisher(for: request)
-            .receive(on: DispatchQueue.main)
-            .tryMap { element in
-                guard let httpResponse = element.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw ServiceError.badResponse
-                }
-
-                return element.data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
+            .map(\.data)
+            .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
 }

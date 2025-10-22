@@ -6,11 +6,26 @@
 //
 
 import Testing
+import Combine
+import Foundation
+import Factory
 
 struct BestProductsTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test func testFiltering() async {
+        Container.shared.productRepository.register {
+            MockProductRepository()
+        }
+        
+        let viewModel = await MainAppViewModel()
+        await viewModel.getProducts()
+
+        #expect(await viewModel.fullProductList.count == 30)
+        #expect(await viewModel.filteredProductList.isEmpty)
+
+        await viewModel.filterProducts(with: "red")
+
+        #expect(await viewModel.filteredProductList.count == 2)
     }
 
 }

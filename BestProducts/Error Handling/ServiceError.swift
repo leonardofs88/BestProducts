@@ -9,6 +9,7 @@ import Foundation
 
 enum ServiceError: Error {
     case wrongURL
+    case invalidSession
     case badResponse
     case unknown
 }

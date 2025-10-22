@@ -15,10 +15,12 @@ class ProductRepository: ProductRepositoryProtocol {
 
     func getProductList() -> AnyPublisher<ProductWrapper, any Error> {
 
-        guard let request = EndpointRouter.https.getURL(for: .products) else {
+        guard let request = EndpointRouter.https(.get).getURL(for: .products) else {
             return Fail(outputType: ProductWrapper.self, failure: ServiceError.wrongURL).eraseToAnyPublisher()
         }
 
         return service.fetchData(for: request)
+                    .decode(type: ProductWrapper.self, decoder: JSONDecoder())
+                    .eraseToAnyPublisher()
     }
 }

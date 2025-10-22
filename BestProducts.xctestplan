@@ -1,0 +1,40 @@
+{
+  "configurations" : [
+    {
+      "id" : "D62CD70E-32B8-45F4-8044-26B7D59CB005",
+      "name" : "Test Scheme Action",
+      "options" : {
+        "environmentVariableEntries" : [
+
+        ]
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:BestProducts.xcodeproj",
+      "identifier" : "98705B1A2E9FA0BB001C9A3F",
+      "name" : "BestProducts"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:BestProducts.xcodeproj",
+        "identifier" : "98705B2D2E9FA0BC001C9A3F",
+        "name" : "BestProductsTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:BestProducts.xcodeproj",
+        "identifier" : "98705B372E9FA0BC001C9A3F",
+        "name" : "BestProductsUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

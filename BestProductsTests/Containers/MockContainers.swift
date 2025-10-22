@@ -8,8 +8,10 @@
 import Factory
 
 extension Container {
+
+    @MainActor
     var mainAppViewModel: Factory<MainAppViewModelProtocol> {
-        self { MockMainAppViewModel() }
+        self { @MainActor in MockMainAppViewModel() }
     }
 
     var service: Factory<ServiceProtocol> {

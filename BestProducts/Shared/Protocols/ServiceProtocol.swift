@@ -9,6 +9,6 @@ import Combine
 import Foundation
 
 protocol ServiceProtocol {
-    var urlSession: URLSession { get }
-    func fetchData<T: Codable>(for request: URLRequest) -> AnyPublisher<T, any Error>
+    var urlSession: URLSession? { get }
+    func fetchData(for request: URLRequest) -> AnyPublisher<Data, any Error>
 }

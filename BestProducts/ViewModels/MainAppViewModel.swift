@@ -32,8 +32,8 @@ class MainAppViewModel: MainAppViewModelProtocol {
                     print("Error: ", error)
                 }
             } receiveValue: { [weak self] wrapper in
-                self?.fullProductList = wrapper.products
-                self?.filterProducts()
+                    self?.fullProductList = wrapper.products
+                    self?.filterProducts()
             }
             .store(in: &cancellables)
     }
@@ -62,28 +62,34 @@ class MainAppViewModel: MainAppViewModelProtocol {
 
         let terms = term.isEmpty ? termTags.compactMap(\.term) : bufferTermTags.compactMap { $0.term != "" ? $0.term : nil }
 
-        Task { @MainActor in
-            filteredProductList = if terms.isEmpty {
-                fullProductList
-            } else {
-                fullProductList.filter { product in
-                    terms.contains(
-                        where: {
-                            (product.title.range(of: $0, options: filterOptions) != nil)
-                            && (product.description.range(of: $0, options: filterOptions) != nil)
-                        })
-                }
+        fullProductList.filter { product in
+                terms.contains(
+                    where: {
+                        (product.title.range(of: $0, options: filterOptions) != nil)
+                        && (product.description.range(of: $0, options: filterOptions) != nil)
+                    })
             }
-        }
+            .map { $0 }
+            .publisher
+            .collect()
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveValue: { [weak self] items in
+                    guard let self else { return }
+                    filteredProductList = items.isEmpty ? fullProductList : items
+                })
+            .store(in: &cancellables)
     }
 
     func removeTag(_ id: UUID) {
         termTags.removeAll { $0.id == id }
         filterProducts()
+
     }
 
     func clearTags() {
         termTags.removeAll()
         filterProducts()
+
     }
 }

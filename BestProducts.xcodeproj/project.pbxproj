@@ -10,6 +10,8 @@
 		98017EDE2EA2405C00393AE7 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 98017EDD2EA2405C00393AE7 /* Factory */; };
 		9816B7B02E9FA55900853C98 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 9816B7AF2E9FA55900853C98 /* Factory */; };
 		986603712EA64E8F004D9FA0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 986603702EA64E8F004D9FA0 /* Kingfisher */; };
+		988061342EA64F950084A184 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = 9880612D2EA64F950084A184 /* products.json */; };
+		988061622EA7E7FD0084A184 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = 9880612D2EA64F950084A184 /* products.json */; };
 		98BAA25A2EA5186800E8DD01 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 98BAA2592EA5186800E8DD01 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +53,8 @@
 		98705B1B2E9FA0BB001C9A3F /* BestProducts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestProducts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98705B2E2E9FA0BC001C9A3F /* BestProductsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestProductsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98705B382E9FA0BC001C9A3F /* BestProductsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestProductsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9880612D2EA64F950084A184 /* products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = products.json; sourceTree = "<group>"; };
+		988061612EA7E3350084A184 /* BestProducts.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BestProducts.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -58,10 +62,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BestProductsApp.swift,
+				Repositories/EndpointRouter.swift,
 				Resources/Assets.xcassets,
 				Shared/Enumerations/AppSysteButtomType.swift,
 				Shared/Enumerations/Endpoint.swift,
-				Shared/Enumerations/EndpointRouter.swift,
 				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
@@ -150,6 +154,7 @@
 				Shared/Protocols/ProductRepositoryProtocol.swift,
 				Shared/Protocols/ServiceProtocol.swift,
 				Shared/Utilities/ViewOffsetKey.swift,
+				ViewModels/MainAppViewModel.swift,
 			);
 			target = 98705B2D2E9FA0BC001C9A3F /* BestProductsTests */;
 		};
@@ -251,6 +256,8 @@
 		98705B122E9FA0BB001C9A3F = {
 			isa = PBXGroup;
 			children = (
+				9880612D2EA64F950084A184 /* products.json */,
+				988061612EA7E3350084A184 /* BestProducts.xctestplan */,
 				98705B1D2E9FA0BB001C9A3F /* BestProducts */,
 				98705B312E9FA0BC001C9A3F /* BestProductsTests */,
 				98705B3B2E9FA0BC001C9A3F /* BestProductsUITests */,
@@ -507,6 +514,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988061622EA7E7FD0084A184 /* products.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +522,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988061342EA64F950084A184 /* products.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,14 +964,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HXGGE8M769;
+				GCC_PREPROCESSOR_DEFINITIONS = "TEST=1";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leoStudies.BestProductsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TEST;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -978,14 +990,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HXGGE8M769;
+				GCC_PREPROCESSOR_DEFINITIONS = "TEST=1";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leoStudies.BestProductsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TEST;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";

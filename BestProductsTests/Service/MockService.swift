@@ -10,16 +10,18 @@ import Combine
 
 class MockService: ServiceProtocol {
 
-    let urlSession = URLSession(configuration: .default)
+    let urlSession: URLSession? = nil
 
-    func fetchData<T: Codable>(for request: URLRequest) -> AnyPublisher<T, any Error> {
-        urlSession
-            .dataTaskPublisher(for: request)
-            .receive(on: DispatchQueue.main)
-            .tryMap { element in
-                return element.data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+    func fetchData(for request: URLRequest) -> AnyPublisher<Data, any Error> {
+        Just(request.url)
+                    .tryMap { url in
+                        guard let url = url else { throw URLError(.fileDoesNotExist) }
+                        return try Data(contentsOf: url)
+                    }
+                    .mapError({ error in
+                        print(error.localizedDescription)
+                        return error
+                    })
+                    .eraseToAnyPublisher()
     }
 }

@@ -10,8 +10,9 @@ import Factory
 // MARK: - Containers for Best Products Target only
 
 extension Container {
+    @MainActor
     var mainAppViewModel: Factory<MainAppViewModelProtocol> {
-        self { MainAppViewModel() }
+        self { @MainActor in MainAppViewModel() }
     }
 
     var service: Factory<ServiceProtocol> {

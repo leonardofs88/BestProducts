@@ -15,6 +15,7 @@ enum MockEndpointRouter: EndpointProtocol {
     }
 
     func getURL(for type: Endpoint) -> URLRequest? {
-        URLRequest(url: .documentsDirectory.appendingPathComponent(type.rawValue, conformingTo: .json))
+        guard let domain else { return nil }
+        return URLRequest(url: domain.appendingPathComponent(type.rawValue, conformingTo: .json))
     }
 }

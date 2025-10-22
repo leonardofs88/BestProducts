@@ -9,14 +9,20 @@ import SwiftUI
 
 @main
 struct BestProductsApp: App {
+    static let isRunningUnitTests: Bool = {
+        let environment = ProcessInfo().environment
+        return (environment["XCTestConfigurationFilePath"] != nil)
+    }()
 
     var body: some Scene {
         WindowGroup {
-            #if PRODUCTS
-            MainAppView()
-            #elseif FORMS
-            FormView()
-            #endif
+            if !BestProductsApp.isRunningUnitTests {
+                #if PRODUCTS
+                MainAppView()
+                #elseif FORMS
+                FormView()
+                #endif
+            }
         }
     }
 }

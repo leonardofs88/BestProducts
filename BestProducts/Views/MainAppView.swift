@@ -18,7 +18,6 @@ struct MainAppView: View {
     var body: some View {
         NavigationStack {
             VStack {
-
                 if isShowingSearch {
                     VStack {
                         SearchView(
@@ -55,7 +54,6 @@ struct MainAppView: View {
                     Text("Products")
                         .font(.largeTitle)
                 }
-
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
                         withAnimation(.bouncy(duration: 0.3)) {

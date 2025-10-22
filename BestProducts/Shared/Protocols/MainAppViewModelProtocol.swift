@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 protocol MainAppViewModelProtocol {
     var productRepository: ProductRepositoryProtocol { get }
     var cancellables: Set<AnyCancellable> { get }
