@@ -22,13 +22,15 @@ struct MainAppView: View {
                     VStack {
                         SearchView(
                             termTags: mainAppViewModel.termTags
-                        ) { searchTerm, filter in
+                        ) { searchTerm in
                             mainAppViewModel.filterProducts(
-                                with: searchTerm,
-                                filter: filter
+                                with: searchTerm
                             )
                         } deleteTag: { mainAppViewModel.removeTag($0) }
                         clearTags: {
+                            mainAppViewModel.clearTags()
+                        }
+                        .onDisappear {
                             mainAppViewModel.clearTags()
                         }
                         .transition(.move(edge: .top))

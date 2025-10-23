@@ -124,6 +124,7 @@
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
 				Shared/Protocols/EndpointProtocol.swift,
+				Shared/Protocols/FilterManagerProtocol.swift,
 				Shared/Protocols/MainAppViewModelProtocol.swift,
 				Shared/Protocols/ProductRepositoryProtocol.swift,
 				Shared/Protocols/ServiceProtocol.swift,
@@ -134,7 +135,6 @@
 				Views/Components/SystemButtom.swift,
 				Views/DetailsView.swift,
 				Views/ProductListView.swift,
-				Views/SearchView.swift,
 			);
 			target = 98705B372E9FA0BC001C9A3F /* BestProductsUITests */;
 		};
@@ -149,7 +149,9 @@
 				Shared/Enumerations/FilterOption.swift,
 				"Shared/Extensions/Strings+Extensions.swift",
 				"Shared/Extensions/View+Extensions.swift",
+				Shared/Managers/FilterManager.swift,
 				Shared/Protocols/EndpointProtocol.swift,
+				Shared/Protocols/FilterManagerProtocol.swift,
 				Shared/Protocols/MainAppViewModelProtocol.swift,
 				Shared/Protocols/ProductRepositoryProtocol.swift,
 				Shared/Protocols/ServiceProtocol.swift,

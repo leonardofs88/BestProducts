@@ -22,4 +22,8 @@ extension Container {
     var productRepository: Factory<ProductRepositoryProtocol> {
         self { ProductRepository() }
     }
+
+    var filterManager: Factory<FilterManagerProtocol> {
+        self { FilterManager() }
+    }
 }

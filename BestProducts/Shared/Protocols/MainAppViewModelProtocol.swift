@@ -14,10 +14,11 @@ protocol MainAppViewModelProtocol {
     var cancellables: Set<AnyCancellable> { get }
     var fullProductList: [Product] { get }
     var filteredProductList: [Product] { get }
+    var filterManager: FilterManagerProtocol { get }
     var termTags: [TermTag] { get set }
 
     func getProducts()
-    func filterProducts(with term: String, filter: FilterOption)
+    func filterProducts(with term: String)
     func removeTag(_ id: UUID)
     func clearTags()
 }

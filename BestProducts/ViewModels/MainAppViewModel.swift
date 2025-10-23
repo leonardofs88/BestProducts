@@ -12,13 +12,14 @@ import Combine
 @Observable
 class MainAppViewModel: MainAppViewModelProtocol {
 
+    @ObservationIgnored @Injected(\.filterManager) var filterManager
+
     @ObservationIgnored @Injected(\.productRepository) private(set) var productRepository
 
     @ObservationIgnored private(set) lazy var cancellables: Set<AnyCancellable> = []
 
     private(set) var fullProductList: [Product] = []
     private(set) var filteredProductList: [Product] = []
-
     var termTags: [TermTag] = []
 
     func getProducts() {
@@ -32,25 +33,14 @@ class MainAppViewModel: MainAppViewModelProtocol {
                     print("Error: ", error)
                 }
             } receiveValue: { [weak self] wrapper in
-                    self?.fullProductList = wrapper.products
-                    self?.filterProducts()
+                self?.fullProductList = wrapper.products
+                self?.filterProducts()
             }
             .store(in: &cancellables)
     }
 
-    func filterProducts(with term: String = "", filter: FilterOption = .all) {
+    func filterProducts(with term: String = "") {
         let termTag = TermTag(term: term.trimmingCharacters(in: .whitespacesAndNewlines))
-
-        let filterOptions: String.CompareOptions =  switch filter {
-        case .caseInsensitive:
-            [.caseInsensitive]
-        case .diacriticInsensitive:
-            [.diacriticInsensitive]
-        case .all:
-            [.caseInsensitive, .diacriticInsensitive]
-        case .none:
-            []
-        }
 
         var bufferTermTags: [TermTag] = termTags
 
@@ -63,22 +53,26 @@ class MainAppViewModel: MainAppViewModelProtocol {
         let terms = term.isEmpty ? termTags.compactMap(\.term) : bufferTermTags.compactMap { $0.term != "" ? $0.term : nil }
 
         fullProductList.filter { product in
-                terms.contains(
-                    where: {
-                        (product.title.range(of: $0, options: filterOptions) != nil)
-                        && (product.description.range(of: $0, options: filterOptions) != nil)
-                    })
-            }
-            .map { $0 }
-            .publisher
-            .collect()
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveValue: { [weak self] items in
-                    guard let self else { return }
-                    filteredProductList = items.isEmpty ? fullProductList : items
+            terms.contains(
+                where: {
+                    (product.title.range(of: $0, options: filterManager.getFilters()) != nil)
+                    && (product.description.range(of: $0, options: filterManager.getFilters()) != nil)
                 })
-            .store(in: &cancellables)
+        }
+        .map { $0 }
+        .publisher
+        .collect()
+        .receive(on: DispatchQueue.main)
+        .sink(
+            receiveValue: { [weak self] items in
+                guard let self else { return }
+                filteredProductList =  if !items.isEmpty {
+                    items
+                } else {
+                    terms.isEmpty ? fullProductList : []
+                }
+            })
+        .store(in: &cancellables)
     }
 
     func removeTag(_ id: UUID) {

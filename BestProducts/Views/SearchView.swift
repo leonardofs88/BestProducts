@@ -6,26 +6,27 @@
 //
 
 import SwiftUI
+import Factory
 
 struct SearchView: View {
+
+    @Injected(\.filterManager) private var filterManager
 
     @State private(set) var searchTerm: String = ""
     @State private(set) var caseInsensitive: Bool = true {
         didSet {
-            filterState()
+            filterAction()
         }
     }
 
     @State private(set) var diacriticInsesitive: Bool = true {
         didSet {
-            filterState()
+            filterAction()
         }
     }
 
-    @State private(set) var filter: FilterOption = .all
-
     private(set) var termTags: [TermTag]
-    private(set) var searchAction: (String, FilterOption) -> Void
+    private(set) var searchAction: (String) -> Void
     private(set) var deleteTag: (UUID) -> Void
     private(set) var clearTags: () -> Void
 
@@ -93,29 +94,26 @@ struct SearchView: View {
                 searchTerm = ""
             }
 
-            searchAction(newTerm, filter)
+            searchAction(newTerm)
         }
     }
 
-    func filterState() {
-        if caseInsensitive && diacriticInsesitive {
-            filter = .all
-        } else if diacriticInsesitive {
-            filter = .diacriticInsensitive
-        } else if caseInsensitive {
-            filter = .caseInsensitive
-        } else {
-            filter = .none
+    func filterAction() {
+        Task {
+            await filterManager.setOption(
+                caseInsensitive: caseInsensitive,
+                diacriticInsesitive: diacriticInsesitive
+            )
+            searchAction(searchTerm)
         }
-        searchAction(searchTerm, filter)
     }
 }
 
 #Preview {
     SearchView(
         termTags: []
-    ) { searchTerm, filter in
-        print("search term: \(searchTerm) with filter: \(filter)")
+    ) { searchTerm in
+        print("search term: \(searchTerm)")
     } deleteTag: { print("delete tag ID: \($0)") }
     clearTags: { print("Tags cleared") }
 }

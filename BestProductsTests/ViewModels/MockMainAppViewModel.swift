@@ -10,6 +10,8 @@ import Foundation
 import Factory
 
 class MockMainAppViewModel: MainAppViewModelProtocol {
+
+    @Injected(\.filterManager) var filterManager
     @Injected(\.productRepository) var productRepository
 
     lazy var cancellables: Set<AnyCancellable> = []
@@ -37,7 +39,7 @@ class MockMainAppViewModel: MainAppViewModelProtocol {
 
     }
 
-    func filterProducts(with term: String, filter: FilterOption) {
+    func filterProducts(with term: String) {
 
     }
 
@@ -46,6 +48,6 @@ class MockMainAppViewModel: MainAppViewModelProtocol {
     }
 
     func clearTags() {
-
+        
     }
 }
